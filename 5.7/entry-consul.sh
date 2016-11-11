@@ -1,0 +1,1 @@
+../entry-consul.sh

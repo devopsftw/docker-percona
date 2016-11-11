@@ -1,0 +1,27 @@
+machine:
+    services:
+        - docker
+
+dependencies:
+    override:
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker build devopsftw/percona:5.6 5.6/
+        - docker build devopsftw/percona:5.7 5.7/
+
+test:
+    override:
+        - docker run -d -p 4261:3376 -p 4262:8500 devopsftw/percona:5.6
+        - docker run -d -p 4271:3376 -p 4272:8500 devopsftw/percona:5.7
+        - sleep 10
+        - nc -z -v 127.0.0.1 4261
+        - nc -z -v 127.0.0.1 4262
+        - nc -z -v 127.0.0.1 4271
+        - nc -z -v 127.0.0.1 4272
+
+deployment:
+    hub:
+        branch: master
+        commands:
+            - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+            - docker push devopsftw/percona:5.6
+            - docker push devopsftw/percona:5.7
