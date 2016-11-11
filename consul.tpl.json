@@ -7,10 +7,10 @@
     "services": [
         {
             "name": "${CONSUL_SERVICE_NAME}",
-            "port": 11211,
+            "port": 3376,
             "checks": [
                 {
-                "tcp": "localhost:11211",
+                "tcp": "localhost:3376",
                 "interval": "10s",
                 "timeout": "1s"
                 }

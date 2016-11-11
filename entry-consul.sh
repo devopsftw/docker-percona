@@ -20,4 +20,6 @@ if [ $ret != 0 ]; then
 fi
 /usr/local/bin/consul agent -config-file /etc/consul.json $JOIN_STR &
 
+set -- docker-entrypoint.sh $@
+
 exec "$@"
