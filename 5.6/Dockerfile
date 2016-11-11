@@ -13,8 +13,8 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends ca-certific
     apt-get purge -y wget unzip && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ADD entry-consul.sh /usr/local/bin
-ADD consul.tpl.json /etc
+COPY entry-consul.sh /usr/local/bin
+COPY consul.tpl.json /etc
 
 ENTRYPOINT [ "entry-consul.sh" ]
 CMD [ "mysqld" ]
