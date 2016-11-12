@@ -2,7 +2,7 @@
 set -e
 set -x
 
-CONSUL_CONT=$(docker run -d -p 8500:8500 devopsftw/consul agent -dev -datacenter circle)
+CONSUL_CONT=$(docker run -d -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 devopsftw/consul agent -dev -datacenter circle)
 CONSUL_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $CONSUL_CONT)
 CONT_56=$(docker run -d -e "CONSUL_JOIN=$CONSUL_IP" -e "CONSUL_DC=circle" -e "CONSUL_SERVICE_NAME=prc56" -e "MYSQL_ROOT_PASSWORD=test" devopsftw/percona:5.6)
 CONT_57=$(docker run -d -e "CONSUL_JOIN=$CONSUL_IP" -e "CONSUL_DC=circle" -e "CONSUL_SERVICE_NAME=prc57" -e "MYSQL_ROOT_PASSWORD=test" devopsftw/percona:5.7)
