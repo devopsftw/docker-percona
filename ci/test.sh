@@ -10,9 +10,10 @@ CONT_57=$(docker run -d -e "CONSUL_JOIN=$CONSUL_IP" -e "CONSUL_DC=circle" -e "CO
 CONT_56_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $CONT_56)
 CONT_57_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $CONT_57)
 
-sleep 10
-nc -z -v $CONT_56_IP 3376
+sleep 25
+
+nc -z -v $CONT_56_IP 3306
 test $(curl -s 'localhost:8500/v1/health/service/prc56' | jq -c '.[0].Node') != 'null'
 
-nc -z -v $CONT_57_IP 3376
+nc -z -v $CONT_57_IP 3306
 test $(curl -s 'localhost:8500/v1/health/service/prc57' | jq -c '.[0].Node') != 'null'
