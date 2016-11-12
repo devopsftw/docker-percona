@@ -13,7 +13,7 @@ CONT_57_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $CONT_57)
 sleep 25
 
 nc -z -v $CONT_56_IP 3306
-test $(curl -s 'localhost:8500/v1/health/service/prc56' | jq -c '.[0].Node') != 'null'
+test $(curl -s 'localhost:8500/v1/health/service/prc56?passing' | jq -c '.[0].Node') != 'null'
 
 nc -z -v $CONT_57_IP 3306
-test $(curl -s 'localhost:8500/v1/health/service/prc57' | jq -c '.[0].Node') != 'null'
+test $(curl -s 'localhost:8500/v1/health/service/prc57?passing' | jq -c '.[0].Node') != 'null'
